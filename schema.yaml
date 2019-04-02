@@ -1,0 +1,53 @@
+application_api_version: v1beta1
+properties:
+  name:
+    type: string
+    x-google-marketplace:
+      type: NAME
+  namespace:
+    type: string
+    x-google-marketplace:
+      type: NAMESPACE
+  appName:
+    type: string
+    title: Specify the app name
+    maxLength: 128
+  securityPolicyApiEndpoint:
+    type: string
+    title: Specify the http or https URL for the security policy endpoint 
+    maxLength: 128
+  securityPolicyApiPort:
+    type: string
+    title: Specify the port number of the security policy endpoint 
+    maxLength: 128
+  securityAdapterImageName:
+    type: string
+    default: $REGISTRY:1.0
+    x-google-marketplace:
+      type: IMAGE
+      image:
+        generatedProperties:
+          splitByColon:
+            before: securityAdapterImageRepo
+            after: securityAdapterImageTag
+required:
+- name
+- namespace
+- securityAdapterImageName 
+- appName 
+- securityPolicyApiEndpoint
+- securityPolicyApiPort
+form:
+- widget: help
+  description: My arbitrary <i>description</i>
+x-google-marketplace:
+  clusterConstraints:
+    resources:
+    - replicas: 1
+      requests:
+        cpu: 1
+      affinity:
+        simpleNodeAffinity:
+          type: REQUIRE_ONE_NODE_PER_REPLICA
+    istio:
+      type: OPTIONAL

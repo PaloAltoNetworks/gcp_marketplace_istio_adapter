@@ -1,0 +1,37 @@
+---
+apiVersion: app.k8s.io/v1beta1
+kind: Application
+metadata:
+  name: "$name"
+  namespace: "$namespace"
+labels:
+    app.kubernetes.io/name: "$name"
+spec:
+  descriptor:
+    type: PaloAltoNetworksSecurityAdapter 
+    version: '0.1'
+    description: |-
+      The Palo Alto Networks security adapter provides fine-grained
+      visibility and policy enforcement capabilities for micro-services
+      applications running on Kubernetes and using the Istio service mesh.  
+
+      # Support
+      Details pertaining to community support can be found at: 
+      (https://github.com/paloaltonetworks/istio).
+    maintainers:
+    - name: Palo Alto Networks Developer Relations 
+      url: https://github.com/paloaltonetworks/istio
+    links:
+    - description: Getting Started
+      url: https://github.com/paloaltonetworks/istio
+    notes: |-
+      # Place holder for installation instructions 
+
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: "$name"
+  componentKinds:
+  - group: apps/v1beta2
+    kind: Deployment
+  - group: v1
+    kind: Service
